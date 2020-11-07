@@ -13,6 +13,9 @@
         "editor.autoSurround": "never",
         //"files.autoSave": "onFocusChange"
         "files.autoSave": "afterDelay",
-        "files.autoSaveDelay": 1000
+        "files.autoSaveDelay": 1000,
+        "[javascript]": {
+            "editor.formatOnSave": true
+        }
     }
 }
