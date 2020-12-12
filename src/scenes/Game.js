@@ -7,8 +7,8 @@ class Game extends Phaser.Scene {
 
   preload() {
     this.load.image('mage', 'assets/mage/mage.png');
-    this.load.spritesheet('idle-spritesheet', 'assets/mage/idle.png', { frameWidth: 128, frameHeight: 128 });
-    this.load.spritesheet('walk-spritesheet', 'assets/mage/walk.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.spritesheet('idle-spritesheet', 'assets/mage/idle.png', { frameWidth: 171, frameHeight: 128 });
+    this.load.spritesheet('walk-spritesheet', 'assets/mage/walk.png', { frameWidth: 171, frameHeight: 128 });
   }
 
   create() {
@@ -31,6 +31,7 @@ class Game extends Phaser.Scene {
 
 
     let hero = new Hero(this, 400, 300);
+
 
 
   }
