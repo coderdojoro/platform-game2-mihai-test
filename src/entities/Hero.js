@@ -67,7 +67,7 @@ class Hero extends Phaser.GameObjects.Sprite {
             this.anims.play('hero-idle');
             this.animState = "idle";
         }
-        if (this.heroState == "walk" && this.animState != "walk" && this.animState != "jump") {
+        if (this.heroState == "walk" && this.animState != "walk") {
             this.anims.play('hero-walk');
             this.animState = "walk";
         }
