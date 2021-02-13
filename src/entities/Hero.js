@@ -58,9 +58,17 @@ class Hero extends Phaser.GameObjects.Sprite {
             this.heroState = "walk";
         }
 
-        if (this.keyJump.isDown && this.heroState != 'jump' && this.body.onFloor() && this.body.velocity.y == 0) {
-            this.body.setVelocityY(-550);
+        let justDown = Phaser.Input.Keyboard.JustDown(this.keyJump);
+
+        if (justDown && this.heroState != 'jump' && this.body.onFloor() && this.body.velocity.y == 0) {
+            this.body.setVelocityY(-250);
+            justDown = false;
             this.heroState = 'jump';
+        }
+
+        if (justDown && this.heroState == 'jump') {
+            this.body.setVelocityY(-400);
+            this.heroState = 'double-jump';
         }
 
         if (this.heroState == "idle" && this.animState != "idle") {
@@ -74,6 +82,11 @@ class Hero extends Phaser.GameObjects.Sprite {
         if (this.heroState == 'jump' && this.animState != 'jump') {
             this.anims.play('hero-jump');
             this.animState = 'jump';
+        }
+
+        if (this.heroState == 'double-jump' && this.animState != 'double-jump') {
+            this.anims.play('hero-double-jump');
+            this.animState = 'double-jump';
         }
 
         console.log("heroState:" + this.heroState + " animState:" + this.animState);
