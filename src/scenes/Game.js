@@ -12,6 +12,10 @@ class Game extends Phaser.Scene {
     this.load.spritesheet('jump-spritesheet', 'assets/mage/jump.png', { frameWidth: 171, frameHeight: 128 });
     this.load.spritesheet('double-jump-spritesheet', 'assets/mage/double-jump.png', { frameWidth: 171, frameHeight: 128 });
 
+    this.load.tilemapTiledJSON('level1-tilemap', 'assets/tilemap.json');
+    this.load.image('ground-image', 'assets/tiles/tiles.png ');
+    this.load.image('bush-image', 'assets/tiles/bush-and-trees.png');
+
   }
 
   create() {
@@ -47,10 +51,36 @@ class Game extends Phaser.Scene {
     });
 
 
-    let hero = new Hero(this, 400, 300);
+
+    let map = this.make.tilemap({ key: 'level1-tilemap' });
+    let groundTiles = map.addTilesetImage('ground', 'ground-image');
+    let bushTiles = map.addTilesetImage('bush', 'bush-image');
+
+    let objects = map.getObjectLayer('Objects').objects;
+
+    let heroX;
+    let heroY;
+    for (let a = 0; a < objects.length; a++) {
+      let object = objects[a];
+      if (object.name == 'Start') {
+        heroX = object.x;
+        heroY = object.y
+      }
+    }
 
 
+    let bkg = map.createStaticLayer('background', [groundTiles, bushTiles]);
+    let hero = new Hero(this, heroX, heroY);
+    let groundLayer = map.createStaticLayer('ground', [groundTiles, bushTiles]);
+    let fgd = map.createStaticLayer('foreground', [groundTiles, bushTiles])
 
+    this.physics.add.collider(hero, groundLayer);
+    groundLayer.setCollisionBetween(groundTiles.firstgid, groundTiles.firstgid + groundTiles.total, true);
+
+    this.cameras.main.startFollow(hero);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.physics.world.setBoundsCollision(true, true, false, true);
   }
 
 
